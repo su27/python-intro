@@ -1,3 +1,3 @@
 slides_python:
-	@python make_slides.py < index.tmpl > index.html
+	@python template/make_slides.py < ./template/index.tmpl > index.html
 

@@ -52,8 +52,8 @@ layout: false
     TypeError: cannot concatenate 'str' and 'int' objects
 
 - 一切皆对象
-     - 变量名只是一个名字，它指向一个对象
-     - 赋值操作其实是绑定操作
+  - 变量名只是一个名字，它指向一个对象
+  - 赋值操作其实是绑定操作
 
 
     .python
@@ -75,7 +75,7 @@ layout: false
 
 - help()
 
-- doc
+- docstring
 
 
     .python
