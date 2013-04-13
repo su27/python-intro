@@ -1111,4 +1111,8 @@ python:
 
     >>> reduce((lambda x,y: x+y), range(10))
     45
+
+    # Builtin functions are faster:
+    >>> from operator import add
+    >>> reduce(add, range(10))
 ]
