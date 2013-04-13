@@ -3,14 +3,14 @@
   font-style: normal;
   font-weight: 400;
   src: local('Yanone Kaffeesatz Regular'), local('YanoneKaffeesatz-Regular'),
-  url(static/1.woff) format('woff');
+  url(1.woff) format('woff');
 }
 
 @font-face {
   font-family: 'Droid Serif';
   font-style: normal;
   font-weight: 400;
-  src: local('Droid Serif'), local('DroidSerif'), url(static/2.woff) format('woff');
+  src: local('Droid Serif'), local('DroidSerif'), url(2.woff) format('woff');
 }
 
 body { font-family: 'Droid Serif'; }
