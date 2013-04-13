@@ -24,6 +24,7 @@ h2 { font-size: 2em; }
 h3 { font-size: 1.6em; }
 pre .comment {color: #95916E; }
 pre code {color: #ececec}
+pre .python .decorator {color: #64a9df}
 .footnote {
   position: absolute;
   bottom: 3em;
@@ -56,6 +57,7 @@ code {
   font-size: 0.9em;
 }
 #slideshow .slide .content pre code {
+  font-family: "consolas";
   font-size: 0.9em;
   padding: 15px;
 }
