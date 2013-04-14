@@ -209,6 +209,9 @@ template: inverse
     >>> '{2}-{0}-{1}'.format('1', '4', '2013')
     '2013-1-4'
 
+    >>> '{}:{}:{day}'.format(2009, 4, day='Sunday') # python 2.7
+    ’2009:4:Sunday’
+
     >>> coord = (3, 5)
     >>> 'X: {0[0]};  Y: {0[1]}'.format(coord)
     'X: 3;  Y: 5'
