@@ -141,9 +141,12 @@ layout: false
     2
     >>> 5.0 / 2
     2.5
+
     >>> from __future__ import division
     >>> 5 / 2
     2.5
+    >>> 5 // 2
+    2
 
 - 其他运算
 ]
@@ -219,13 +222,13 @@ layout: false
 
     .python
 
-    #不好:
+    # 不好:
 
     s = ''
     for i in seq:
         s += chr(i)
 
-    #好:
+    # 好:
 
     ''.join(chr(i) for i in seq)
 ]
@@ -394,7 +397,7 @@ layout: false
     >>> combs
     [(1, 3), (1, 4), (2, 3), (2, 1), (2, 4), (3, 1), (3, 4)]
 
-    # equals to:
+    # 可以这样写:
     >>> [(x, y) for x in [1,2,3] for y in [3,1,4] if x != y]
 ]
 ---
@@ -671,11 +674,10 @@ python:
 - Example B
 
 
-    #不好:
+    # 不好:
     for i in xrange(len(seq1)):
         foo(seq1[i], seq2[i])
-
-    #好:
+    # 好:
     for i, j in zip(seq1, seq2):
         foo(i, j)
 
@@ -953,7 +955,7 @@ python:
     def foo(value):
         return value, value % 2
 
-### 关键字参数和默认参数
+- 关键字参数和默认参数
 
 
     .python
@@ -963,7 +965,42 @@ python:
     >>> net_conn('douban', 8080)
     >>> net_conn(port=8080, host='douban')
 
-### 默认参数要在关键字参数前面
+- 默认参数要在关键字参数前面
+
+
+    .python
+    >>> net_conn(host='douban', 8080)
+      File "<stdin>", line 1
+    SyntaxError: non-keyword arg after keyword arg
+]
+---
+.left-column[
+## Functions
+]
+.right-column[
+
+- 参数默认值不能为可变对象
+
+
+    .python
+    >>> def hero_string(heroes=[]):
+       ....:     heroes.append("me")
+       ....:     return ', '.join(heroes)
+
+    >>> hero_string(['batman'])
+    'batman, me'
+
+    >>> hero_string(['batman', 'superman'])
+    'batman, superman, me'
+
+    >>> hero_string()
+    'me'
+
+    >>> hero_string()
+    'me, me'
+
+    >>> hero_string()
+    'me, me, me'
 
 ]
 ---
@@ -1112,7 +1149,181 @@ python:
     >>> reduce((lambda x,y: x+y), range(10))
     45
 
-    # Builtin functions are faster:
+    # but this is faster:
     >>> from operator import add
     >>> reduce(add, range(10))
+]
+---
+.left-column[
+## Functions
+## Decorator
+]
+.right-column[
+
+- Case A
+
+
+    .python
+    def my_songs(request):
+        if request.user:
+            songs = request.user.songs
+            return render_songs_list(songs=songs)
+        else:
+            raise NotLoginError()
+
+- 重构
+
+
+    .python
+    @require_login
+    def my_songs(request):
+        songs = request.user.songs
+        return render_songs_list(songs=songs)
+
+]
+---
+.left-column[
+## Functions
+## Decorator
+]
+.right-column[
+
+- Case B
+
+
+    .python
+    MCKEY_SONGS = 'songs:%s'
+
+    def get_songs(user_id):
+        songs = mc.get(MCKEY_SONGS % user_id)
+        if songs is None:               # "if not songs"?
+            rows = store.execute('select id from user_song'
+                                 'where user_id=%s', user_id)
+            songs = [id for id, in rows]
+            mc.set(MCKEY_SONGS, songs, ONE_DAY)
+        return songs
+
+- 重构
+
+
+    .python
+    @cache(MCKEY_SONGS, ONE_DAY)
+    def get_songs(user_id):
+        rows = store.execute('select id from user_song'
+                             'where user_id=%s', user_id)
+        return [id for id, in rows]
+
+]
+---
+.left-column[
+## Functions
+## Decorator
+]
+.right-column[
+
+- How to write a decorator(case A)
+
+
+    .python
+    def require_login(func):
+        def _(request, *args, **kwargs):
+            if request.user:
+                return func(request, *args, **kwargs)
+            raise NotLoginError()
+        return _
+
+
+    @require_login
+    def my_songs(request):
+        return render_songs_list(request.user.songs)
+
+- decorator做了什么
+
+
+.pull-left[
+
+    .python
+    @f
+    def func(): pass
+]
+
+.pull-right[
+
+    def func(): pass
+    func = f(func)
+]
+]
+---
+.left-column[
+## Functions
+## Decorator
+]
+.right-column[
+
+- How to write a decorator(case B)
+
+
+    .python
+    def cache(key, expire=0):
+        def cached_func(original_func):
+            def _(*args, **kw):
+                mckey = key % args
+                result = mc.get(mckey)
+                if result is None:
+                    result = original_func(*args, **kw)
+                    mc.set(mckey, result, expire)
+                return result
+            return _
+        return cached_func
+
+
+    @cache(MCKEY_SONGS, ONE_DAY)
+    def get_songs(user_id):
+        rows = store.execute('select id from user_song'
+                             'where user_id=%s', user_id)
+        return [id for id, in rows]
+
+- 带参数的decorator做了什么
+
+.pull-left[
+
+
+    .python
+    @f(arg)
+    def func(): pass
+
+]
+.pull-right[
+
+    def func(): pass
+    func = f(arg)(func)
+]
+
+]
+---
+.left-column[
+## Functions
+## Decorator
+]
+.right-column[
+
+- Another way(callable object)
+
+
+    .python
+    class cache(object):
+        def __init__(self, key, expire=0):
+            self.key = key
+            self.expire = expire
+
+        def __call__(self, original_func):
+            def cached_func(*args, **kw):
+                mckey = self.key % args
+                result = mc.get(mckey)
+                if result is None:
+                    result = original_func(*args, **kw)
+                    mc.set(mckey, result, expire)
+                return result
+            return cached_func
+
 ]
