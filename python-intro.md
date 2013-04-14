@@ -1,14 +1,10 @@
 name: inverse
 layout: true
 class: center, middle, inverse
-
 ---
-
 # Python 简介
 su27
-
 ---
-
 layout: false
 .left-column[
   ## What is Python?
@@ -97,6 +93,10 @@ layout: false
      |
 ]
 ---
+template: inverse
+
+# Data Structures
+---
 .left-column[
 ## Data Structures
 ]
@@ -160,6 +160,14 @@ layout: false
 
 - 字符串是不可变的
 
+
+    .python
+    >>> s = 'python'
+    >>> s[0]
+    'p'
+    >>> s[0] = 'c' # TypeError
+
+
 - 字符串的切片和成员操作
 
 
@@ -221,7 +229,6 @@ layout: false
 
 
     .python
-
     # 不好:
 
     s = ''
@@ -322,6 +329,30 @@ layout: false
     >>> queue.append("Terry") # Terry arrives
     >>> queue.popleft() # The first to arrive now leaves
     'Eric'
+]
+---
+.left-column[
+## Data Structures
+]
+.right-column[
+## list
+
+- 改变一个可变对象的方法，通常没有返回值
+
+
+    .python
+    >>> li = ['n', 'b', 'a']
+    >>> li.sort()
+    >>> li.reverse()
+    >>>
+
+    # 与不可变对象比较:
+    >>> 'This is it.\n'.strip().upper()
+    'THIS IS IT.'
+
+    # 如果想要返回:
+    >>> sorted(li)
+    ['a', 'b', 'n']
 ]
 ---
 .left-column[
@@ -574,6 +605,10 @@ alternatives to Python’s general purpose built-in containers,
 
 ]
 ---
+template: inverse
+
+# Control Flow Tools
+---
 .left-column[
 ## Control Flow Tools
 ]
@@ -588,18 +623,18 @@ C:
     .c
     if (x > 0)
         if (y > 0)
-            printf('x,y available!\n');
+            printf('both available!\n');
     else
-        printf('not available!\n');
+        printf('x not available!\n');
 python:
 
 
     .python
     if x > 0:
         if y > 0:
-            print 'x,y available!'
+            print 'both available!'
     else:
-        print 'not available!'
+        print 'x not available!'
 
 ]
 ---
@@ -634,25 +669,22 @@ python:
 ]
 .right-column[
 ## 循环
-- while
-- for i in ...:
+- `while`
+- `for i in ...`
+- `break`, `continue`, `pass`, ...
 - while和for都可以有else
 
 
     .python
     def find_cat(cat, boxes):
         for box in boxes:
-            if box.is_empty:
+            if box.isempty():
                 continue
             elif cat in box:
                 print "The cat is in", box
                 break
         else:
             print "We have lost the cat."
-
-
-## 其他
-- `break`, `continue`, `pass`, ...
 ]
 ---
 .left-column[
@@ -726,6 +758,10 @@ python:
         pass
 ]
 ---
+template: inverse
+
+# Modules
+---
 .left-column[
 ## Modules
 ]
@@ -798,6 +834,10 @@ python:
 ### Note: import的时候, 被import的模块代码将被执行
 ]
 ---
+template: inverse
+
+# Iterators
+---
 .left-column[
 ## Iterators
 ]
@@ -855,8 +895,10 @@ python:
 ## Iterators
 ]
 .right-column[
-## 迭代器
-- 能被迭代的是这样的对象: 把它传给iter(), 运行后会返回一个支持next()方法的对象
+
+- 一个`iterator`描述了一个数据流。
+- `iterator`支持`next()`方法，返回其描述的数据流的下一个元素。
+- 如果能从一个对象中得到它的`iterator`，就说这个对象能被迭代(`iterable`)。
 - 写一个:
 
 
@@ -887,7 +929,7 @@ python:
 ]
 .right-column[
 ## 生成器
-- 生成器是一种简单强大的创建迭代器的方法, 用yield代替return，
+- 生成器是一种简单强大的创建迭代器的方式, 用yield代替return表示返回值，
 这样每次被调用next的时候，就会一直执行到下一次yield.
 
 
@@ -943,6 +985,10 @@ python:
     set(['a', 'this', 'big', 'is', 'dog', 'cat', 'small'])
 
 ]
+---
+template: inverse
+
+# Functions
 ---
 .left-column[
 ## Functions
@@ -1197,7 +1243,7 @@ python:
     def get_songs(user_id):
         songs = mc.get(MCKEY_SONGS % user_id)
         if songs is None:               # "if not songs"?
-            rows = store.execute('select id from user_song'
+            rows = store.execute('select id from user_song '
                                  'where user_id=%s', user_id)
             songs = [id for id, in rows]
             mc.set(MCKEY_SONGS, songs, ONE_DAY)
@@ -1209,7 +1255,7 @@ python:
     .python
     @cache(MCKEY_SONGS, ONE_DAY)
     def get_songs(user_id):
-        rows = store.execute('select id from user_song'
+        rows = store.execute('select id from user_song '
                              'where user_id=%s', user_id)
         return [id for id, in rows]
 
@@ -1279,7 +1325,7 @@ python:
 
     @cache(MCKEY_SONGS, ONE_DAY)
     def get_songs(user_id):
-        rows = store.execute('select id from user_song'
+        rows = store.execute('select id from user_song '
                              'where user_id=%s', user_id)
         return [id for id, in rows]
 
