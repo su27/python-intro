@@ -644,15 +644,12 @@ python:
 .right-column[
 ## 分支
 
-- 条件判断与 bool()
+- `if(not)`通过计算bool()来判断，因此可以直接利用对象的bool()值
 
 
     .python
     toys = []
-    if len(toys) == 0: # 或者 if toys != []
-        print "boring..."
-
-    # better
+    # if len(toys) == 0: 或者 if toys != [] 不好
     if not toys:
         print "boring..."
 
@@ -912,7 +909,7 @@ template: inverse
             return self
         def next(self):
             if self.index == 0:
-            raise StopIteration
+                raise StopIteration
             self.index = self.index - 1
             return self.data [self.index]
 
@@ -929,32 +926,51 @@ template: inverse
 ]
 .right-column[
 ## 生成器
-- 生成器是一种简单强大的创建迭代器的方式, 用yield代替return表示返回值，
-这样每次被调用next的时候，就会一直执行到下一次yield.
+- 生成器是一种简单创建迭代器的特殊函数。生成器执行后返回的是一个迭代器。
+- 执行到yield的时候，其运行状态会被挂起，下次调用next()时恢复执行。
 
 
     .python
     def reverse(data):
-        for index in range(len(data)-1, -1, -1):
-            yield data[index]
+        for char in data[::-1]:
+            yield char
 
-    >>> for char in reverse('red'):
+    >>> for char in reverse('AI'):
     ...     print char
-    d
-    e
-    r
+    I
+    A
+]
+---
+.left-column[
+## Iterators
+## Generators
+]
+.right-column[
 
-- BTW...
+- 生成器可以有一个不带参数的return，表示数据流的结束，跟执行到底效果一样。
+- 生成器可以接受传入值。
+- 不同于一般函数，生成器可以从多个不同位置开始运行、结束运行和挂起。
 
 
     .python
-    for char in reversed(data):
-        yield char
+    def gcomb(x, k):  # 生成元素列表x中选k个的所有可能组合
+        if k == 0:
+            yield []
+        elif k <= len(x):
+            first, rest = x[0], x[1:]
 
-    for char in data[::-1]:
-        yield char
+            # 第一个元素要么选，要么不选
+            for c in gcomb(rest, k-1):
+                c.insert(0, first)
+                yield c
+
+            for c in gcomb(rest, k):
+                yield c
+
+
+    >>> list(gcomb([1, 2, 3, 4], 2))
+    [[1, 2], [1, 3], [1, 4], [2, 3], [2, 4], [3, 4]]
 ]
-
 ---
 .left-column[
 ## Iterators
@@ -962,8 +978,10 @@ template: inverse
 ## Generator Expressions
 ]
 .right-column[
-## 生成器表达式
-- 把列表解析的方括号换成圆括号
+### 生成器表达式
+- 把列表解析的方括号换成圆括号，就是生成器表达式，它返回一个迭代器。
+- 迭代器按需计算数据，而列表解析需要一次性把所有数据实体化。
+  处理无限长度或海量数据时，生成器表达式更佳。
 
 
     .python
@@ -984,6 +1002,26 @@ template: inverse
     >>> words
     set(['a', 'this', 'big', 'is', 'dog', 'cat', 'small'])
 
+]
+---
+.left-column[
+## Iterators
+]
+.right-column[
+## tools for iterable
+
+### any / all
+- any([0, 1, 0]) => True
+- all([1, 1, 0]) => False
+
+### itertools
+- itertools.count() => 0, 1, 2, ...
+- itertools.cycle([1, 2]) => 1, 2, 1, 2, ...
+- itertools.chain([1, 2], ('a', 'b')) => 1, 2, 'a', 'b'
+- map的iter版：itertools.imap
+- filter的iter版：itertools.ifilter
+- zip的iter版：itertools.izip
+- ...
 ]
 ---
 template: inverse
