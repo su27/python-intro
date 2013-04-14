@@ -1066,7 +1066,7 @@ template: inverse
 ]
 .right-column[
 
-- 参数默认值不能为可变对象
+- 可变对象不能做参数默认值
 
 
     .python
