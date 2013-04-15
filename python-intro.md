@@ -1,15 +1,8 @@
-name: inverse
-layout: true
-class: center, middle, inverse
 ---
 # Python 简介
 su27
 ---
-layout: false
-.left-column[
-  ## What is Python?
-]
-.right-column[
+## What is Python?
 ### Python: 优雅而健壮的编程语言
 
 - 高级
@@ -23,12 +16,8 @@ layout: false
 - 一些函数化编程的结构
 
 - 高效快速，扩展库众多
-]
 ---
-.left-column[
-  ## What is Python?
-]
-.right-column[
+## What is Python?
 
 - 动态语言
 
@@ -55,15 +44,11 @@ TypeError: cannot concatenate 'str' and 'int' objects
 >>> (1).__class__
 int
 ```
-]
 
 ---
 
-.left-column[
-  ## 交互式环境
-]
+## 交互式环境
 
-.right-column[
 
 - python
 
@@ -91,16 +76,12 @@ class list(object)
  |      x.__contains__(y) <==> y in x
  |
 ```
-]
 ---
 template: inverse
 
 # Data Structures
 ---
-.left-column[
 ## Data Structures
-]
-.right-column[
 ## 数值
 
 - int: `100` , `0x3e`
@@ -124,13 +105,9 @@ template: inverse
 - float: `1.1`
 
 - complex: `(9+3j)`
-]
 ---
-.left-column[
 ## Data Structures
-]
 
-.right-column[
 ## 数值运算
 
 - 除法
@@ -149,13 +126,9 @@ template: inverse
 ```
 
 - 其他运算
-]
 ---
-.left-column[
 ## Data Structures
-]
 
-.right-column[
 ## String
 
 - 字符串是不可变的
@@ -184,13 +157,9 @@ True
 >>> 'yah' in s
 False
 ```
-]
 ---
-.left-column[
 ## Data Structures
-]
 
-.right-column[
 ## String
 
 - 字符串的连接与格式化
@@ -219,13 +188,9 @@ False
 >>> 'Target: {latitude}, {longitude}'.format(**coord)
 'Target: 37.24N, -115.81W'
 ```
-]
 ---
-.left-column[
 ## Data Structures
-]
 
-.right-column[
 ## String
 
 - 字符串的连接与格式化
@@ -241,13 +206,9 @@ for i in seq:
 
 ''.join(chr(i) for i in seq)
 ```
-]
 ---
-.left-column[
 ## Data Structures
-]
 
-.right-column[
 ## String
 
 - str:
@@ -271,14 +232,10 @@ u'\u8c46\u74e3'
 >>> u'\u8c46\u74e3'.encode('utf8')
 '\xe8\xb1\x86\xe7\x93\xa3'
 ```
-]
 ---
 
-.left-column[
 ## Data Structures
-]
 
-.right-column[
 ## 字符串的方法
 
 ### find, index, rfind, rindex, count
@@ -287,25 +244,17 @@ u'\u8c46\u74e3'
 ### split, rsplit, splitlines
 ### join
 
-]
 ---
-.left-column[
 ## Data Structures
-]
 
-.right-column[
 ## 容器
 ### tuple: `(1000001, 'ahbei')` , `(1,)`
 ### list: `[1, 2, 3, 4, 5]`
 ### dict: `{'CEO': 'ahbei', 'Team Members': ['brant', 'hongqn', ...]}`
 ### set: `set([1, 2, 3])`
-]
 ---
-.left-column[
 ## Data Structures
-]
 
-.right-column[
 ## list
 - 切片
 - `append` , `insert` , `pop`, `remove`, `reverse` , `sort`
@@ -331,12 +280,8 @@ u'\u8c46\u74e3'
 >>> queue.popleft() # The first to arrive now leaves
 'Eric'
 ```
-]
 ---
-.left-column[
 ## Data Structures
-]
-.right-column[
 ## list
 
 - 改变一个可变对象的方法，通常没有返回值
@@ -355,12 +300,8 @@ u'\u8c46\u74e3'
 >>> sorted(li)
 ['a', 'b', 'n']
 ```
-]
 ---
-.left-column[
 ## Data Structures
-]
-.right-column[
 ## FP tools for list
 
 ### filter
@@ -379,12 +320,8 @@ u'\u8c46\u74e3'
 >>> map(add, seq, seq)
 [0, 2, 4, 6, 8, 10, 12, 14]
 ```
-]
 ---
-.left-column[
 ## Data Structures
-]
-.right-column[
 ## 列表解析
 ### A.
 
@@ -408,12 +345,8 @@ u'\u8c46\u74e3'
 >>> squares = [x ** 2 for x in range(10)]
 ```
 
-]
 ---
-.left-column[
 ## Data Structures
-]
-.right-column[
 ## 列表解析: 多变量及过滤条件
 ### exam A: flatten a list
 
@@ -437,12 +370,8 @@ u'\u8c46\u74e3'
 # 可以这样写:
 >>> [(x, y) for x in [1,2,3] for y in [3,1,4] if x != y]
 ```
-]
 ---
-.left-column[
 ## Data Structures
-]
-.right-column[
 ### dict
 
 ```python
@@ -468,12 +397,8 @@ u'\u8c46\u74e3'
 >>> Kid['like']
 {'laptop': 'mac', 'book': ['LOTR']}
 ```
-]
 ---
-.left-column[
 ## Data Structures
-]
-.right-column[
 ## set
 
 ### set的修改:
@@ -485,12 +410,8 @@ u'\u8c46\u74e3'
 ### 子集的判断:
 
 `issubset`, `issuperset`, `&gt;`, `&lt;`
-]
 ---
-.left-column[
 ## Data Structures
-]
-.right-column[
 ## tuple
 - 元组是不可变类型
 
@@ -514,12 +435,8 @@ TypeError: unhashable type: 'list'
 - mutable: list, dict, set, 类实例
 - immutable: 数值类型, 字符串, tuple
 
-]
 ---
-.left-column[
 ## Data Structures
-]
-.right-column[
 ## tuple
 
 - 某种程度的可变
@@ -545,12 +462,8 @@ TypeError: unhashable type: 'list'
 >>> word
 ('hello',)
 ```
-]
 ---
-.left-column[
 ## Data Structures
-]
-.right-column[
 ## tuple
 
 - Unpacking
@@ -562,12 +475,8 @@ TypeError: unhashable type: 'list'
 
 >>> a, b = b, a
 ```
-]
 ---
-.left-column[
 ## Data Structures
-]
-.right-column[
 ## collections
 
 Specialized container datatypes, providing
@@ -591,12 +500,8 @@ Counter({'a': 3, 'b': 0, 'c': -3, 'd': -6})
 [('the', 1143), ('and', 966), ('to', 762), ('of', 669), ('i', 631),
  ('you', 554),  ('a', 546), ('my', 514), ('hamlet', 471), ('in', 451)]
  ```
-]
 ---
-.left-column[
 ## Data Structures
-]
-.right-column[
 ## collections
 - OrderedDict
 
@@ -612,16 +517,12 @@ Counter({'a': 3, 'b': 0, 'c': -3, 'd': -6})
 - defaultdict
 - namedtuple
 
-]
 ---
 template: inverse
 
 # Control Flow Tools
 ---
-.left-column[
 ## Control Flow Tools
-]
-.right-column[
 ## 分支
 - if...elif...else
 - 悬挂问题
@@ -647,12 +548,8 @@ else:
     print 'x not available!'
 ```
 
-]
 ---
-.left-column[
 ## Control Flow Tools
-]
-.right-column[
 ## 分支
 
 - `if(not)`通过计算bool()来判断，因此可以直接利用对象的bool()值
@@ -671,12 +568,8 @@ if not toys:
 answer = 'yeah' if toys else 'no'
 ```
 
-]
 ---
-.left-column[
 ## Control Flow Tools
-]
-.right-column[
 ## 循环
 - `while`
 - `for i in ...`
@@ -694,12 +587,8 @@ def find_cat(cat, boxes):
     else:
         print "We have lost the cat."
 ```
-]
 ---
-.left-column[
 ## Control Flow Tools
-]
-.right-column[
 ## 循环
 - Example A
 
@@ -725,12 +614,8 @@ for i, j in zip(seq1, seq2):
 for i, j in itertools.izip(seq1, seq2):
     foo(i, j)
 ```
-]
 ---
-.left-column[
 ## Control Flow Tools
-]
-.right-column[
 ## 异常
 
 - 所有异常都是`Exception`的子类
@@ -750,12 +635,8 @@ finally:
 ```
 
 - `raise`
-]
 ---
-.left-column[
 ## Control Flow Tools
-]
-.right-column[
 ## 异常
 
 - 不要做这样的事情
@@ -766,16 +647,12 @@ try:
 except:
     pass
 ```
-]
 ---
 template: inverse
 
 # Modules
 ---
-.left-column[
 ## Modules
-]
-.right-column[
 ### A module is a file containing Python definitions and statements.
 
 ```python
@@ -800,12 +677,8 @@ def fib(n): # write Fibonacci series up to n
 >>> fibo.__name__
 'fibo'
 ```
-]
 ---
-.left-column[
 ## Modules
-]
-.right-column[
 ## 名称空间与作用域
 
 ### Local, Global, 与 Built-ins 名称空间
@@ -820,12 +693,8 @@ foo.version = 0.2
 ```
 
 ### import即是把名字导入当前的名称空间
-]
 ---
-.left-column[
 ## Modules
-]
-.right-column[
 ### import的方式
 
 ```python
@@ -842,16 +711,12 @@ NameError: name '_author_age' is not defined
 ```
 
 ### Note: import的时候, 被import的模块代码将被执行
-]
 ---
 template: inverse
 
 # Iterators
 ---
-.left-column[
 ## Iterators
-]
-.right-column[
 ## 迭代器
 
 - 迭代器用起来是什么感觉？
@@ -872,12 +737,8 @@ for line in open("myfile.txt"):
 - `xrange`和`range`
 - `iterkeys`, `iteritems`
 
-]
 ---
-.left-column[
 ## Iterators
-]
-.right-column[
 ## 迭代器
 
 - for在这里做了什么?
@@ -899,12 +760,8 @@ Traceback (most recent call last):
         it.next()
 StopIteration
 ```
-]
 ---
-.left-column[
 ## Iterators
-]
-.right-column[
 
 - 一个`iterator`描述了一个数据流。
 - `iterator`支持`next()`方法，返回其描述的数据流的下一个元素。
@@ -931,13 +788,9 @@ class Reverse:
 >>> for char in rev:
 ...     print char
 ```
-]
 ---
-.left-column[
 ## Iterators
 ## Generators
-]
-.right-column[
 ## 生成器
 - 生成器是一种简单创建迭代器的特殊函数。生成器执行后返回的是一个迭代器。
 - 执行到yield的时候，其运行状态会被挂起，下次调用next()时恢复执行。
@@ -952,13 +805,9 @@ def reverse(data):
 I
 A
 ```
-]
 ---
-.left-column[
 ## Iterators
 ## Generators
-]
-.right-column[
 
 - 生成器可以有一个不带参数的return，表示数据流的结束，跟执行到底效果一样。
 - 生成器可以接受传入值。
@@ -983,14 +832,10 @@ def gcomb(x, k):  # 生成元素列表x中选k个的所有可能组合
 >>> list(gcomb([1, 2, 3, 4], 2))
 [[1, 2], [1, 3], [1, 4], [2, 3], [2, 4], [3, 4]]
 ```
-]
 ---
-.left-column[
 ## Iterators
 ## Generators
 ## Generator Expressions
-]
-.right-column[
 ### 生成器表达式
 - 把列表解析的方括号换成圆括号，就是生成器表达式，它返回一个迭代器。
 - 迭代器按需计算数据，而列表解析需要一次性把所有数据实体化。
@@ -1015,12 +860,8 @@ def gcomb(x, k):  # 生成元素列表x中选k个的所有可能组合
 set(['a', 'this', 'big', 'is', 'dog', 'cat', 'small'])
 ```
 
-]
 ---
-.left-column[
 ## Iterators
-]
-.right-column[
 ## tools for iterable
 
 ### any / all
@@ -1035,16 +876,12 @@ set(['a', 'this', 'big', 'is', 'dog', 'cat', 'small'])
 - filter的iter版：itertools.ifilter
 - zip的iter版：itertools.izip
 - ...
-]
 ---
 template: inverse
 
 # Functions
 ---
-.left-column[
 ## Functions
-]
-.right-column[
 ### python中的函数
 
 ```python
@@ -1069,12 +906,8 @@ def net_conn(host, port=80):
   File "<stdin>", line 1
 SyntaxError: non-keyword arg after keyword arg
 ```
-]
 ---
-.left-column[
 ## Functions
-]
-.right-column[
 
 - 可变对象不能做参数默认值
 
@@ -1099,12 +932,8 @@ SyntaxError: non-keyword arg after keyword arg
 'me, me, me'
 ```
 
-]
 ---
-.left-column[
 ## Functions
-]
-.right-column[
 ### 哪些调用是错的？
 
 ```python
@@ -1127,12 +956,8 @@ def net_conn(scheme, host='douban', port=80):
 
 >>> net_conn('http', 'douban', 8080, 'tcp')
 ```
-]
 ---
-.left-column[
 ## Functions
-]
-.right-column[
 ### 哪些调用是错的？
 
 ```python
@@ -1155,12 +980,8 @@ SyntaxError: non-keyword arg after keyword arg
 >>> net_conn(port=8080, host='douban', scheme='http')
 connect to http://douban:8080
 ```
-]
 ---
-.left-column[
 ## Functions
-]
-.right-column[
 ### 哪些调用是错的？
 
 ```python
@@ -1182,12 +1003,8 @@ Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
 TypeError: net_conn() takes at most 3 arguments (4 given)
 ```
-]
 ---
-.left-column[
 ## Functions
-]
-.right-column[
 ### 可变长度的参数
  - 用一个元组接受可变长默认参数
 
@@ -1209,12 +1026,8 @@ def func(arg1, arg2, **rest):
         print 'extra arg: %s=%s' % (arg, rest[arg])
 ```
 
-]
 ---
-.left-column[
 ## Functions
-]
-.right-column[
 ### 可变长度的参数
 
 ```python
@@ -1230,12 +1043,8 @@ x: 1 args: (2, 3) kwargs: {}
 >>> f(1, 2, n=3)
 x: 1 args: (2,) kwargs: {'n': 3}
 ```
-]
 ---
-.left-column[
 ## Functions
-]
-.right-column[
 ### 匿名函数与lambda
 - lambda [_arg1_[, _arg2_, ..., _argN_]]: _expression_
 
@@ -1253,13 +1062,9 @@ x: 1 args: (2,) kwargs: {'n': 3}
 >>> from operator import add
 >>> reduce(add, range(10))
 ```
-]
 ---
-.left-column[
 ## Functions
 ## Decorator
-]
-.right-column[
 
 - Case A
 
@@ -1281,13 +1086,9 @@ def my_songs(request):
     return render_songs_list(songs=songs)
 ```
 
-]
 ---
-.left-column[
 ## Functions
 ## Decorator
-]
-.right-column[
 
 - Case B
 
@@ -1314,13 +1115,9 @@ def get_songs(user_id):
     return [id for id, in rows]
 ```
 
-]
 ---
-.left-column[
 ## Functions
 ## Decorator
-]
-.right-column[
 
 - How to write a decorator(case A)
 
@@ -1340,28 +1137,20 @@ def my_songs(request):
 
 - decorator做了什么
 
-.pull-left[
 
 ```python
 @f
 def func(): pass
 ```
-]
 
-.pull-right[
 
 ```python
 def func(): pass
 func = f(func)
 ```
-]
-]
 ---
-.left-column[
 ## Functions
 ## Decorator
-]
-.right-column[
 
 - How to write a decorator(case B)
 
@@ -1388,27 +1177,19 @@ def get_songs(user_id):
 
 - 带参数的decorator做了什么
 
-.pull-left[
 
 ```python
 @f(arg)
 def func(): pass
 ```
-]
-.pull-right[
 
 ```python
 def func(): pass
 func = f(arg)(func)
 ```
-]
-]
 ---
-.left-column[
 ## Functions
 ## Decorator
-]
-.right-column[
 
 - Another way(callable object)
 
@@ -1428,4 +1209,3 @@ class cache(object):
             return result
         return cached_func
 ```
-]
