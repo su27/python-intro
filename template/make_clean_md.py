@@ -8,6 +8,7 @@ IGNORE_RE = re.compile(
     r'^name:.*|'
     '^layout:.*|'
     '^class:.*|'
+    '^template:.*|'
     '^\.pull-left.*|'
     '^\.pull-right.*|'
     '^\.left-column.*|'

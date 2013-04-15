@@ -77,7 +77,6 @@ class list(object)
  |
 ```
 ---
-template: inverse
 
 # Data Structures
 ---
@@ -518,7 +517,6 @@ Counter({'a': 3, 'b': 0, 'c': -3, 'd': -6})
 - namedtuple
 
 ---
-template: inverse
 
 # Control Flow Tools
 ---
@@ -648,7 +646,6 @@ except:
     pass
 ```
 ---
-template: inverse
 
 # Modules
 ---
@@ -712,7 +709,6 @@ NameError: name '_author_age' is not defined
 
 ### Note: import的时候, 被import的模块代码将被执行
 ---
-template: inverse
 
 # Iterators
 ---
@@ -877,7 +873,6 @@ set(['a', 'this', 'big', 'is', 'dog', 'cat', 'small'])
 - more...
 
 ---
-template: inverse
 
 # Functions
 ---
