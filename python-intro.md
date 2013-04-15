@@ -859,7 +859,6 @@ def gcomb(x, k):  # 生成元素列表x中选k个的所有可能组合
 >>> words
 set(['a', 'this', 'big', 'is', 'dog', 'cat', 'small'])
 ```
-
 ---
 ## Iterators
 ## tools for iterable
@@ -875,7 +874,8 @@ set(['a', 'this', 'big', 'is', 'dog', 'cat', 'small'])
 - map的iter版：itertools.imap
 - filter的iter版：itertools.ifilter
 - zip的iter版：itertools.izip
-- ...
+- more...
+
 ---
 template: inverse
 
