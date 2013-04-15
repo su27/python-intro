@@ -2,4 +2,4 @@ docs:
     pages:
         builder: raw
         dir: pages
-        name Pages
+        name: Pages
