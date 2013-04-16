@@ -1091,12 +1091,13 @@ def my_songs(request):
 MCKEY_SONGS = 'songs:%s'
 
 def get_songs(user_id):
-    songs = mc.get(MCKEY_SONGS % user_id)
+    mckey = MCKEY_SONGS % user_id
+    songs = mc.get(mckey)
     if songs is None:               # "if not songs"?
         rows = store.execute('select id from user_song '
                              'where user_id=%s', user_id)
         songs = [id for id, in rows]
-        mc.set(MCKEY_SONGS, songs, ONE_DAY)
+        mc.set(mckey, songs, ONE_DAY)
     return songs
 ```
 
