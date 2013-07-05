@@ -2,7 +2,6 @@
 # Python 简介
 su27
 ---
-## What is Python?
 ### Python: 优雅而健壮的编程语言
 
 - 高级
@@ -17,7 +16,6 @@ su27
 
 - 高效快速，扩展库众多
 ---
-## What is Python?
 
 - 动态语言
 
@@ -47,7 +45,6 @@ int
 
 ---
 
-## 交互式环境
 
 
 - python
@@ -80,7 +77,6 @@ class list(object)
 
 # Data Structures
 ---
-## Data Structures
 ## 数值
 
 - int: `100` , `0x3e`
@@ -105,7 +101,6 @@ class list(object)
 
 - complex: `(9+3j)`
 ---
-## Data Structures
 
 ## 数值运算
 
@@ -126,7 +121,6 @@ class list(object)
 
 - 其他运算
 ---
-## Data Structures
 
 ## String
 
@@ -157,7 +151,6 @@ True
 False
 ```
 ---
-## Data Structures
 
 ## String
 
@@ -188,7 +181,6 @@ False
 'Target: 37.24N, -115.81W'
 ```
 ---
-## Data Structures
 
 ## String
 
@@ -206,7 +198,6 @@ for i in seq:
 ''.join(chr(i) for i in seq)
 ```
 ---
-## Data Structures
 
 ## String
 
@@ -233,7 +224,6 @@ u'\u8c46\u74e3'
 ```
 ---
 
-## Data Structures
 
 ## 字符串的方法
 
@@ -244,7 +234,6 @@ u'\u8c46\u74e3'
 ### join
 
 ---
-## Data Structures
 
 ## 容器
 ### tuple: `(1000001, 'ahbei')` , `(1,)`
@@ -252,7 +241,6 @@ u'\u8c46\u74e3'
 ### dict: `{'CEO': 'ahbei', 'Team Members': ['brant', 'hongqn', ...]}`
 ### set: `set([1, 2, 3])`
 ---
-## Data Structures
 
 ## list
 - 切片
@@ -280,7 +268,6 @@ u'\u8c46\u74e3'
 'Eric'
 ```
 ---
-## Data Structures
 ## list
 
 - 改变一个可变对象的方法，通常没有返回值
@@ -300,7 +287,6 @@ u'\u8c46\u74e3'
 ['a', 'b', 'n']
 ```
 ---
-## Data Structures
 ## FP tools for list
 
 ### filter
@@ -320,7 +306,6 @@ u'\u8c46\u74e3'
 [0, 2, 4, 6, 8, 10, 12, 14]
 ```
 ---
-## Data Structures
 ## 列表解析
 ### A.
 
@@ -345,7 +330,6 @@ u'\u8c46\u74e3'
 ```
 
 ---
-## Data Structures
 ## 列表解析: 多变量及过滤条件
 ### exam A: flatten a list
 
@@ -370,7 +354,6 @@ u'\u8c46\u74e3'
 >>> [(x, y) for x in [1,2,3] for y in [3,1,4] if x != y]
 ```
 ---
-## Data Structures
 ### dict
 
 ```python
@@ -397,7 +380,6 @@ u'\u8c46\u74e3'
 {'laptop': 'mac', 'book': ['LOTR']}
 ```
 ---
-## Data Structures
 ## set
 
 ### set的修改:
@@ -410,7 +392,6 @@ u'\u8c46\u74e3'
 
 `issubset`, `issuperset`, `&gt;`, `&lt;`
 ---
-## Data Structures
 ## tuple
 - 元组是不可变类型
 
@@ -435,7 +416,6 @@ TypeError: unhashable type: 'list'
 - immutable: 数值类型, 字符串, tuple
 
 ---
-## Data Structures
 ## tuple
 
 - 某种程度的可变
@@ -462,7 +442,6 @@ TypeError: unhashable type: 'list'
 ('hello',)
 ```
 ---
-## Data Structures
 ## tuple
 
 - Unpacking
@@ -475,7 +454,6 @@ TypeError: unhashable type: 'list'
 >>> a, b = b, a
 ```
 ---
-## Data Structures
 ## collections
 
 Specialized container datatypes, providing
@@ -500,7 +478,6 @@ Counter({'a': 3, 'b': 0, 'c': -3, 'd': -6})
  ('you', 554),  ('a', 546), ('my', 514), ('hamlet', 471), ('in', 451)]
  ```
 ---
-## Data Structures
 ## collections
 - OrderedDict
 
@@ -520,7 +497,6 @@ Counter({'a': 3, 'b': 0, 'c': -3, 'd': -6})
 
 # Control Flow Tools
 ---
-## Control Flow Tools
 ## 分支
 - if...elif...else
 - 悬挂问题
@@ -547,7 +523,6 @@ else:
 ```
 
 ---
-## Control Flow Tools
 ## 分支
 
 - `if(not)`通过计算bool()来判断，因此可以直接利用对象的bool()值
@@ -567,7 +542,6 @@ answer = 'yeah' if toys else 'no'
 ```
 
 ---
-## Control Flow Tools
 ## 循环
 - `while`
 - `for i in ...`
@@ -586,7 +560,6 @@ def find_cat(cat, boxes):
         print "We have lost the cat."
 ```
 ---
-## Control Flow Tools
 ## 循环
 - Example A
 
@@ -613,7 +586,6 @@ for i, j in itertools.izip(seq1, seq2):
     foo(i, j)
 ```
 ---
-## Control Flow Tools
 ## 异常
 
 - 所有异常都是`Exception`的子类
@@ -634,7 +606,6 @@ finally:
 
 - `raise`
 ---
-## Control Flow Tools
 ## 异常
 
 - 不要做这样的事情
@@ -649,7 +620,6 @@ except:
 
 # Modules
 ---
-## Modules
 ### A module is a file containing Python definitions and statements.
 
 ```python
@@ -675,7 +645,6 @@ def fib(n): # write Fibonacci series up to n
 'fibo'
 ```
 ---
-## Modules
 ## 名称空间与作用域
 
 ### Local, Global, 与 Built-ins 名称空间
@@ -691,7 +660,6 @@ foo.version = 0.2
 
 ### import即是把名字导入当前的名称空间
 ---
-## Modules
 ### import的方式
 
 ```python
@@ -712,7 +680,6 @@ NameError: name '_author_age' is not defined
 
 # Iterators
 ---
-## Iterators
 ## 迭代器
 
 - 迭代器用起来是什么感觉？
@@ -734,7 +701,6 @@ for line in open("myfile.txt"):
 - `iterkeys`, `iteritems`
 
 ---
-## Iterators
 ## 迭代器
 
 - for在这里做了什么?
@@ -757,7 +723,6 @@ Traceback (most recent call last):
 StopIteration
 ```
 ---
-## Iterators
 
 - 一个`iterator`描述了一个数据流。
 - `iterator`支持`next()`方法，返回其描述的数据流的下一个元素。
@@ -785,8 +750,6 @@ class Reverse:
 ...     print char
 ```
 ---
-## Iterators
-## Generators
 ## 生成器
 - 生成器是一种简单创建迭代器的特殊函数。生成器执行后返回的是一个迭代器。
 - 执行到yield的时候，其运行状态会被挂起，下次调用next()时恢复执行。
@@ -802,8 +765,6 @@ I
 A
 ```
 ---
-## Iterators
-## Generators
 
 - 生成器可以有一个不带参数的return，表示数据流的结束，跟执行到底效果一样。
 - 生成器可以接受传入值。
@@ -829,9 +790,6 @@ def gcomb(x, k):  # 生成元素列表x中选k个的所有可能组合
 [[1, 2], [1, 3], [1, 4], [2, 3], [2, 4], [3, 4]]
 ```
 ---
-## Iterators
-## Generators
-## Generator Expressions
 ### 生成器表达式
 - 把列表解析的方括号换成圆括号，就是生成器表达式，它返回一个迭代器。
 - 迭代器按需计算数据，而列表解析需要一次性把所有数据实体化。
@@ -856,7 +814,6 @@ def gcomb(x, k):  # 生成元素列表x中选k个的所有可能组合
 set(['a', 'this', 'big', 'is', 'dog', 'cat', 'small'])
 ```
 ---
-## Iterators
 ## tools for iterable
 
 ### any / all
@@ -876,7 +833,6 @@ set(['a', 'this', 'big', 'is', 'dog', 'cat', 'small'])
 
 # Functions
 ---
-## Functions
 ### python中的函数
 
 ```python
@@ -902,7 +858,6 @@ def net_conn(host, port=80):
 SyntaxError: non-keyword arg after keyword arg
 ```
 ---
-## Functions
 
 - 可变对象不能做参数默认值
 
@@ -928,7 +883,6 @@ SyntaxError: non-keyword arg after keyword arg
 ```
 
 ---
-## Functions
 ### 哪些调用是错的？
 
 ```python
@@ -952,7 +906,6 @@ def net_conn(scheme, host='douban', port=80):
 >>> net_conn('http', 'douban', 8080, 'tcp')
 ```
 ---
-## Functions
 ### 哪些调用是错的？
 
 ```python
@@ -976,7 +929,6 @@ SyntaxError: non-keyword arg after keyword arg
 connect to http://douban:8080
 ```
 ---
-## Functions
 ### 哪些调用是错的？
 
 ```python
@@ -999,7 +951,6 @@ Traceback (most recent call last):
 TypeError: net_conn() takes at most 3 arguments (4 given)
 ```
 ---
-## Functions
 ### 可变长度的参数
  - 用一个元组接受可变长默认参数
 
@@ -1022,7 +973,6 @@ def func(arg1, arg2, **rest):
 ```
 
 ---
-## Functions
 ### 可变长度的参数
 
 ```python
@@ -1039,7 +989,6 @@ x: 1 args: (2, 3) kwargs: {}
 x: 1 args: (2,) kwargs: {'n': 3}
 ```
 ---
-## Functions
 ### 匿名函数与lambda
 - lambda [_arg1_[, _arg2_, ..., _argN_]]: _expression_
 
@@ -1058,8 +1007,6 @@ x: 1 args: (2,) kwargs: {'n': 3}
 >>> reduce(add, range(10))
 ```
 ---
-## Functions
-## Decorator
 
 - Case A
 
@@ -1082,8 +1029,6 @@ def my_songs(request):
 ```
 
 ---
-## Functions
-## Decorator
 
 - Case B
 
@@ -1112,8 +1057,6 @@ def get_songs(user_id):
 ```
 
 ---
-## Functions
-## Decorator
 
 - How to write a decorator(case A)
 
@@ -1145,8 +1088,6 @@ def func(): pass
 func = f(func)
 ```
 ---
-## Functions
-## Decorator
 
 - How to write a decorator(case B)
 
@@ -1184,8 +1125,6 @@ def func(): pass
 func = f(arg)(func)
 ```
 ---
-## Functions
-## Decorator
 
 - Another way(callable object)
 
