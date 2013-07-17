@@ -669,10 +669,10 @@ foo.version = 0.2
 >>> from fibo import * # 绝大多数情况下要避免这样用
 >>> author
 'su27'
->>> _author_age
+>>> _AUTHOR_AGE
 Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
-NameError: name '_author_age' is not defined
+NameError: name '_AUTHOR_AGE' is not defined
 ```
 
 ### Note: import的时候, 被import的模块代码将被执行
