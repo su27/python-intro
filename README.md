@@ -625,7 +625,7 @@ except:
 ```python
 # fibo.py
 author = 'su27'
-_author_age = 27
+_AUTHOR_AGE = 27
 def fib(n): # write Fibonacci series up to n
     a, b = 0, 1
     while b < n:
