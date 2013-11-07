@@ -573,6 +573,13 @@ TypeError: unhashable type: 'list'
 1024
 
 >>> a, b = b, a
+
+# 注意，其他iterable也是可以unpack的
+>>> a, b = range(2)
+>>> a, b = xrange(2)
+>>> a, b = (i for i in range(2))
+>>> a, b = {"a":1, "b":2}
+>>> a, b = {"a":1, "b":2}.iteritems()
 ```
 ]
 ---
