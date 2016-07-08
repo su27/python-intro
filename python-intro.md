@@ -2269,7 +2269,6 @@ class MyClass(__built-in__.object)
   - 模块被不同的应用调用时
   - 运行时可能面对的未知情况
 
-
 ---
 template: inverse
 # The End
