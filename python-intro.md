@@ -2258,8 +2258,7 @@ class MyClass(__built-in__.object)
 
 ### The `__metaclass__` Method
 
-- Just as regular classes act as templates for producing instances,
-  metaclasses act as templates for producing classes.
+- metaclass是生产class的模板，正如class是生产实例的模板一样。
 
 - 虽然meta-programming十分强大，但绝大部分情况下不会用到，因为在oop中，
   class自己一般不会扮演实例的角色。而且它使class设计晦涩难懂。
@@ -2270,5 +2269,180 @@ class MyClass(__built-in__.object)
   - 运行时可能面对的未知情况
 
 ---
+
 template: inverse
-# The End
+# About Python 3
+Do you like the future?
+
+---
+
+## Python 2 or 3?
+
+- Use python 2 if
+  - 老项目，并且难以转到3
+  - 依赖的某个关键包不支持3
+  - 对python 2 语法有特别的偏好
+
+- Use python 3 if
+  - 不属于以上
+  - 在开发开源库，不想用户流失
+  - 不知道该选什么
+  - 不care
+
+---
+
+## Python 3 有什么变化？
+
+很多。
+
+- [《由于你拒绝升python3所以用不上的10个超棒feature》](https://asmeurer.github.io/python3-presentation/slides.html)
+
+---
+
+## 除此之外，还有很多。
+
+- [dive into python 3 - what's new](http://www.diveintopython3.net/whats-new.html)
+- [python各版本完整What's new](https://docs.python.org/3/whatsnew/index.html)
+
+---
+
+## 打印和数据类型的变化
+
+```python
+# print 1, 2,
+print(1, 2, end=' ')
+
+# raw_input('请输入')
+input('请输入')
+
+# unicode(anything)
+str(anything)
+
+# diablo = u'大菠萝'
+大菠萝 = '大菠萝'
+
+# x = 1000000000000L
+x = 1000000000000
+
+# if x <> y <> z:
+if x != y != z:
+
+# 3 > '2' #=> False
+3 > '2' #=> TypeError: unorderable types: int() > str()
+
+```
+
+---
+
+## dict的一些变化
+
+```python
+# {'a': 1}.has_key('a' or 'b')
+('a' or 'b') in {'a': 1}
+
+# a_dict.items()
+list(a_dict.items())
+
+# a_dict.values()
+list(a_dict.values())
+
+# a_dict.iterkeys()
+iter(a_dict.keys())
+
+# [i for i in a_dict.iterkeys()]
+[i for i in a_dict.keys()]
+
+d = {**attrs, **more_attrs, user='Bob'}
+```
+
+---
+
+## zip/map/filter 返回迭代器
+
+```python
+zip(a, b)
+map(a, b)
+filter(a, b)
+```
+
+---
+
+## 一些库被重新组织
+
+```python
+# import httplib
+import http.client
+
+# import SimpleHTTPServer
+import http.server
+
+# import urllib (以及urllib2, urlparse, urlencode等，都用urllib重组了）
+import urllib.request, urllib.parse, urllib.error
+
+# import __builtin__
+import builtins
+
+# try:
+#     import cStringIO as StringIO
+# except ImportError:
+#     import StringIO
+import io
+
+# try: import cPickle...
+import pickle
+```
+
+---
+
+## 一些全局函数的变化
+
+```python
+# 禁止隐式相对导入
+# from event_ticket import EventTicket
+from .event_ticket import EventTicket
+
+# iterable.next()
+next(iterable)
+iterable.__next__()
+
+# for i in xrange(10):
+for i in range(10):
+
+# filter(a_function, a_sequence)
+list(filter(a_function, a_sequence))
+
+# filter(None, a_sequence)
+[i for i in a_sequence if i]
+
+# map(a_function, 'PapayaWhip')
+list(map(a_function, 'PapayaWhip'))
+
+# 因此 itertools.izip/imap/ifilter 被从itertools里面移除
+```
+
+---
+
+## metaclass 的改动
+
+```python
+# class Whip:
+#     __metaclass__ = PapayaMeta
+class Whip(metaclass=PapayaMeta):
+    pass
+
+---
+
+## for循环不会再污染global名字空间
+
+```python
+i = 1
+print('before: i =', i)
+
+print('comprehension:', [i for i in range(5)])
+
+print('after: i =', i)
+
+# before: i = 1
+# comprehension: [0, 1, 2, 3, 4]
+# after: i = 1
+```
