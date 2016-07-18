@@ -693,6 +693,8 @@ template: inverse
 
 ### A module is a file containing Python definitions and statements.
 
+- 一个模块
+
 ```python
 # fibo.py
 author = 'su27'
@@ -704,7 +706,7 @@ def fib(n): # write Fibonacci series up to n
         a, b = b, a+b
 ```
 
-- import modules to use
+- 导入并使用这个模块
 
 ```python
 >>> import fibo
@@ -718,20 +720,51 @@ def fib(n): # write Fibonacci series up to n
 
 ---
 
-## 名称空间与作用域
-
-### Local, Global, 与 Built-ins 名称空间
-
-### 自由区隔的名字空间
+### 直接执行模块
 
 ```python
-def foo():
-    pass
-foo.__doc__ = '呀，刚才忘了加上doc字符串'
-foo.version = 0.2
+if __name__ == "__main__":
+    import sys
+    fib(int(sys.argv[1]))
+
+# python fibo.py <arguments>
 ```
 
-### import即是把名字导入当前的名称空间
+### 模块查找路径
+
+* `sys.path`: 脚本所在路径、`PYTHONPATH`、与安装相关的默认路径
+
+```python
+>>> sys.path.append('/ufs/guido/lib/python')
+```
+
+---
+
+## Packages
+
+```shell
+sound/                          Top-level package
+      __init__.py               Initialize the sound package
+      formats/                  Subpackage for file format conversions
+              __init__.py
+              wavread.py
+              wavwrite.py
+              ...
+      effects/                  Subpackage for sound effects
+              __init__.py
+              echo.py
+              surround.py
+              ...
+```
+
+```python
+import sound.effects.echo
+
+# for example, in the `surround` module
+from . import echo
+from .. import formats
+from ..formats import wavread
+```
 
 ---
 
@@ -744,13 +777,35 @@ foo.version = 0.2
 >>> from fibo import * # 绝大多数情况下要避免这样用
 >>> author
 'su27'
+
 >>> _AUTHOR_AGE
 Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
 NameError: name '_AUTHOR_AGE' is not defined
 ```
 
-### Note: import的时候, 被import的模块代码将被执行
+- 注意: import 的时候, 被 import 的模块代码将被执行
+
+---
+
+## 名字空间与作用域
+
+* 名字空间，用于组织代码与区隔逻辑
+
+```python
+def foo():
+    pass
+foo.version = 0.2
+```
+
+* 作用域，优先级按照 *LEGB* 规则
+
+  * *L*, local: 在函数内定义的非 global 名字
+  * *E*, enclosing function locals: 闭包内的名字，优先从内到外
+  * *G*, global: 函数内声明的 global 名字，或者模块文件顶级作用域中定义的名字
+  * *B*, built-in: python `built-in` 模块中提供的名字
+
+* import 即是把名字导入当前的名字空间
 
 ---
 
@@ -761,22 +816,42 @@ template: inverse
 
 ## python中的函数
 
-- 关键字参数和默认参数
+- 定义函数时，non-default 参数要在 default 参数之前
 
 ```python
 def net_conn(host, port=80):
     print "connect to %s:%s" % (host, port)
 
->>> net_conn('douban', 8080)
->>> net_conn(port=8080, host='douban')
 ```
 
-- 默认参数要在关键字参数前面
+- 调用函数时，positional (non-keyword) 参数在 keyword 参数之前
+- 每个传入的 keyword 参数，必须有对应的定义
+- 每个参数最多接受一个值
 
 ```python
+>>> net_conn('douban', 8080)
+>>> net_conn(port=8080, host='douban')
 >>> net_conn(host='douban', 8080)
   File "<stdin>", line 1
 SyntaxError: non-keyword arg after keyword arg
+```
+
+---
+
+## 可变长度的参数
+
+```python
+>>> def f(x, *args, **kwargs):
+...     print 'x:', x, 'args:', args, 'kwargs:', kwargs
+...
+>>> f(1)
+x: 1 args: () kwargs: {}
+
+>>> f(1, 2, 3)
+x: 1 args: (2, 3) kwargs: {}
+
+>>> f(1, 2, n=3)
+x: 1 args: (2,) kwargs: {'n': 3}
 ```
 
 ---
@@ -880,24 +955,6 @@ TypeError: net_conn() takes at most 3 arguments (4 given)
 
 ---
 
-## 可变长度的参数
-
-```python
->>> def f(x, *args, **kwargs):
-...     print 'x:', x, 'args:', args, 'kwargs:', kwargs
-...
->>> f(1)
-x: 1 args: () kwargs: {}
-
->>> f(1, 2, 3)
-x: 1 args: (2, 3) kwargs: {}
-
->>> f(1, 2, n=3)
-x: 1 args: (2,) kwargs: {'n': 3}
-```
-
----
-
 ## 匿名函数与lambda
 
 - lambda [_arg1_[, _arg2_, ..., _argN_]]: _expression_
@@ -932,7 +989,7 @@ def my_songs(request):
         raise NotLoginError()
 ```
 
-### 重构
+### 重构后
 
 ```python
 @require_login
@@ -941,6 +998,40 @@ def my_songs(request):
     return render_songs_list(songs=songs)
 ```
 
+
+---
+
+## decorator 做了什么
+
+```python
+@f
+def func(): pass
+```
+
+### 等效于
+
+```python
+def func(): pass
+func = f(func)
+```
+
+---
+
+## 实现这个 decorator
+
+```python
+def require_login(func):
+    def _(request, *args, **kwargs):
+        if request.user:
+            return func(request, *args, **kwargs)
+        raise NotLoginError()
+    return _
+
+
+@require_login
+def my_songs(request):
+    return render_songs_list(request.user.songs)
+```
 
 ---
 
@@ -960,7 +1051,7 @@ def get_songs(user_id):
     return songs
 ```
 
-### 重构
+### 重构后
 
 ```python
 @cache(MCKEY_SONGS, ONE_DAY)
@@ -972,28 +1063,10 @@ def get_songs(user_id):
 
 ---
 
-## How to write a decorator(case A)
+## 带参数的 decorator 做了什么
 
 ```python
-def require_login(func):
-    def _(request, *args, **kwargs):
-        if request.user:
-            return func(request, *args, **kwargs)
-        raise NotLoginError()
-    return _
-
-
-@require_login
-def my_songs(request):
-    return render_songs_list(request.user.songs)
-```
-
----
-
-## decorator做了什么
-
-```python
-@f
+@f(arg)
 def func(): pass
 ```
 
@@ -1001,12 +1074,12 @@ def func(): pass
 
 ```python
 def func(): pass
-func = f(func)
+func = f(arg)(func)
 ```
 
 ---
 
-## How to write a decorator(case B)
+## 实现这个带参数的 decorator
 
 ```python
 def cache(key, expire=0):
@@ -1031,23 +1104,7 @@ def get_songs(user_id):
 
 ---
 
-## 带参数的decorator做了什么
-
-```python
-@f(arg)
-def func(): pass
-```
-
-### 等效于
-
-```python
-def func(): pass
-func = f(arg)(func)
-```
-
----
-
-## Another way(callable object)
+## 也可以使用 callable object 的方式实现
 
 ```python
 class cache(object):
@@ -1110,7 +1167,7 @@ for line in open("myfile.txt"):
 
 ---
 
-## for在这里做了什么?
+## for 在这里做了什么?
 
 - 调用了iter()方法，得到一个对象
 - 对该对象反复调用next()方法
@@ -1136,7 +1193,7 @@ StopIteration
 
 ---
 
-## for是“iteration sugar”
+## for 是 “iteration sugar”
 
 - 原始用法
 
@@ -1160,7 +1217,7 @@ for item in something:
 
 ---
 
-## Iterator是什么？
+## Iterator 是什么？
 
 - 一个`iterator`(迭代器)描述了一个数据流。
 - `iterator`支持`next()`方法，返回其描述的数据流的下一个元素。
@@ -1168,7 +1225,7 @@ for item in something:
 
 ---
 
-## 写一个Iterator
+## 写一个 Iterator
 
 ```python
 class Reverse:
@@ -1288,9 +1345,9 @@ set(['a', 'this', 'big', 'is', 'dog', 'cat', 'small'])
 - itertools.count() => 0, 1, 2, ...
 - itertools.cycle([1, 2]) => 1, 2, 1, 2, ...
 - itertools.chain([1, 2], ('a', 'b')) => 1, 2, 'a', 'b'
-- map的iter版：itertools.imap
-- filter的iter版：itertools.ifilter
-- zip的iter版：itertools.izip
+- map 的 iter 版：itertools.imap
+- filter 的 iter 版：itertools.ifilter
+- zip 的 iter 版：itertools.izip
 - more...
 
 
@@ -2001,26 +2058,30 @@ def get_picture():
 
 ---
 
+## 一个故事
+
 ```python
 def get_picture():
     return hasattr(self, 'picture') and self.picture or default_picture
 
-# wait, it should be...
+# Wait, it should be...
 def get_picture():
     return (hasattr(self, 'picture') and [self.picture] or [default_picture])[0]
 ```
 
 ---
 
+## 一个故事
+
 ```python
 def get_picture():
     return hasattr(self, 'picture') and self.picture or default_picture
 
-# wait, it should be...
+# Wait, it should be...
 def get_picture():
     return (hasattr(self, 'picture') and [self.picture] or [default_picture])[0]
 
-# why not
+# Make a better world
 def get_picture():
     return self.picture if hasattr(self, 'picture') else default_picture
 
@@ -2029,26 +2090,28 @@ def get_picture():
 
 ---
 
+## 一个故事
+
 ```python
 def get_picture():
     return hasattr(self, 'picture') and self.picture or default_picture
 
-# wait, it should be...
+# Wait, it should be...
 def get_picture():
     return (hasattr(self, 'picture') and [self.picture] or [default_picture])[0]
 
-# why not
+# Make a better world
 def get_picture():
     return self.picture if hasattr(self, 'picture') else default_picture
 
 # then unittest failed...LOL
 
-# is this better than the original one?
+# OK fixed. But is it better than the original one?
 def get_picture():
     return self.picture if (hasattr(self, 'picture') and
                             self.picture) else default_picture
 
-# and this?
+# Um, how about this?
 def get_picture():
     return getattr(self, 'picture', None) or default_picture
 ```
@@ -2062,7 +2125,7 @@ template: inverse
 
 ## Subclassing
 
-### old-style class的诡异行为
+### old-style class 的诡异行为
 ```python
 >>> class Base:
 ...     def say(self):
@@ -2085,7 +2148,7 @@ base
 
 ---
 
-### MRO用于解决复杂继承关系中的method查找问题(new-style class)
+### MRO 用于解决复杂继承关系中的 method 查找问题(new-style class)
 ```
                           6
                          ---
@@ -2113,9 +2176,9 @@ Level 0                 0 | A |                (more specialized)
 
 ---
 
-- super并没有调用到“父类方法”，而是调用了MRO中的下一个方法。
-- 例如，Y是X的子类，`super(Y, obj).foo()`会在`obj.__class__.__mro__`中，
-  紧接着Y查找到X的foo方法进行调用。
+- super并没有调用到“父类方法”，而是调用了 MRO 中的下一个方法。
+- 例如， Y 是 X 的子类，`super(Y, obj).foo()` 会在 `obj.__class__.__mro__` 中，
+  紧接着 Y 查找到 X 的 foo 方法进行调用。
 
 ```python
 >>> class A(object):
@@ -2144,14 +2207,14 @@ C A B B
 
 ---
 
-- 不要混用old-style和new-style class
+- 不要混用 old-style 和 new-style class
 - 尽量避免多重继承
-- 父类和子类中要用super就全用super
-- super的其他一些问题(http://fuhm.net/super-harmful)
+- 父类和子类中要用 super 就全用 super
+- super 的其他一些问题 (http://fuhm.net/super-harmful)
 
 ---
 
-- 在python中，私有属性并不能用一般的方式实现
+- 在 python 中，私有属性并不能用一般的方式实现
 
 ```python
 >>> class MyClass(object):
@@ -2172,13 +2235,13 @@ AttributeError: 'MyClass' object has no attribute '__secret_value'
 1
 ```
 
-- 私有行为可以用descriptor和property的方式实现
+- 私有行为可以用 descriptor 和 property 的方式实现
 
 ---
 
 ## Descriptors
 
-- descriptor用来自定义你希望对象在读写属性时发生的事情。
+- descriptor 用来自定义你希望对象在读写属性时发生的事情。
 
 ```shell
 >>> class UpperString(object)
@@ -2242,22 +2305,22 @@ class MyClass(__built-in__.object)
 
 ### `__getattr__()` 和 `__getattribute__`
 
-- `__getattr__`方法是在属性不能从实例的`__dict__`或它的类的`__dict__`，
-  或它的祖先的`__dict__`中找到的时候，才被调用。但`__getattribute__`无论何种情况，
+- `__getattr__` 方法是在属性不能从实例的 `__dict__` 或它的类的 `__dict__`，
+  或它的祖先的 `__dict__` 中找到的时候，才被调用。但 `__getattribute__` 无论何种情况，
   都会被调用。
 
-- 两者都被定义了的话，除非`__getattribute__`引发`AttributeError`，或者显式调用，
-  否则`__getattr__`不会被调用。
+- 两者都被定义了的话，除非 `__getattribute__` 引发 `AttributeError`，或者显式调用，
+  否则 `__getattr__` 不会被调用。
 
 ---
 
-### `__getattribute__`中属性查找的顺序
+### `__getattribute__` 中属性查找的顺序
 
 - 类属性
 - data descriptor
 - 实例属性
 - non-data descriptor
-- 此时`__getattribute__`会抛出`AttributeError`，如果有`__getattr__`，则会调用之，
+- 此时 `__getattribute__` 会抛出 `AttributeError`，如果有 `__getattr__`，则会调用之，
   否则错误将会抛给用户。
 
 ---
@@ -2266,8 +2329,8 @@ class MyClass(__built-in__.object)
 
 ### The `__new__` Method
 
-- 当对象创建时永远会调用`__new__`，不论`__init__`是否被调用。
-- `__new__`在`__init__`之前被调用。
+- 当对象创建时永远会调用 `__new__`，不论 `__init__` 是否被调用。
+- `__new__` 在 `__init__` 之前被调用。
 - 用来检查对象的初始化情况，或进行一些更底层的初始化工作。
 
 ---
@@ -2278,10 +2341,10 @@ class MyClass(__built-in__.object)
 
 ### The `__metaclass__` Method
 
-- metaclass是生产class的模板，正如class是生产实例的模板一样。
+- metaclass 是生产 class 的模板，正如 class 是生产实例的模板一样。
 
-- 虽然meta-programming十分强大，但绝大部分情况下不会用到，因为在oop中，
-  class自己一般不会扮演实例的角色。而且它使class设计晦涩难懂。
+- 虽然 meta-programming 十分强大，但绝大部分情况下不会用到，因为在 oop 中，
+  class 自己一般不会扮演实例的角色。而且它使 class 设计晦涩难懂。
 
 - 适用的情况一般是，在类代码的设计阶段，并不能精确预知这个类需要做的所有事情，比如：
 
@@ -2315,14 +2378,14 @@ Do you like the future?
 
 很多。
 
-- [《由于你拒绝升python3所以用不上的10个超棒feature》](https://asmeurer.github.io/python3-presentation/slides.html)
+- [《由于你拒绝升 python3 所以用不上的10个超棒 feature》](https://asmeurer.github.io/python3-presentation/slides.html)
 
 ---
 
 ## 除此之外，还有很多。
 
 - [dive into python 3 - what's new](http://www.diveintopython3.net/whats-new.html)
-- [python各版本完整What's new](https://docs.python.org/3/whatsnew/index.html)
+- [python 各版本完整 What's new](https://docs.python.org/3/whatsnew/index.html)
 
 ---
 
@@ -2354,7 +2417,7 @@ if x != y != z:
 
 ---
 
-## dict的一些变化
+## dict 的一些变化
 
 ```python
 # {'a': 1}.has_key('a' or 'b')
@@ -2396,7 +2459,7 @@ import http.client
 # import SimpleHTTPServer
 import http.server
 
-# import urllib (以及urllib2, urlparse, urlencode等，都用urllib重组了）
+# import urllib (以及urllib2, urlparse, urlencode等，都用 urllib 重组了）
 import urllib.request, urllib.parse, urllib.error
 
 # import __builtin__
@@ -2452,7 +2515,7 @@ class Whip(metaclass=PapayaMeta):
 
 ---
 
-## for循环不会再污染global名字空间
+## for 循环不会再污染 global 名字空间
 
 ```python
 i = 1
